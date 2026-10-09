@@ -649,3 +649,6 @@ footer{background:rgba(255,255,255,.55);border-top:var(--card-edge)}
 html{cursor:default;caret-color:transparent}
 input,textarea,[contenteditable="true"]{cursor:text;caret-color:var(--violet)}
 a,button,summary,label,.chip,.lcard,[role="tab"],input[type=checkbox],input[type=radio]{cursor:pointer}
+/* no text highlighting or caret on page text (click, double-click, drag); typing fields work as normal */
+html{-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:text}
