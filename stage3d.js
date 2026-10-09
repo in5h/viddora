@@ -105,8 +105,8 @@ function stage(el,{size=8,floaters=true,cam=21}={}){
   size_();
 
   /* ---------- context loss: fall back to the flat brand mark, recover if the browser restores it ---------- */
-  canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();cancelAnimationFrame(raf);raf=0;el.classList.remove('live');});
-  canvas.addEventListener('webglcontextrestored',()=>{el.classList.add('live');size_();wake();});
+  canvas.addEventListener('webglcontextlost',e=>{e.preventDefault();cancelAnimationFrame(raf);raf=0;el.classList.remove('live');canvas.style.visibility='hidden';});
+  canvas.addEventListener('webglcontextrestored',()=>{canvas.style.visibility='';el.classList.add('live');size_();wake();});
   addEventListener('pagehide',e=>{if(e.persisted)return;geos.forEach(g=>g.dispose());envRT.dispose();r.dispose();});
 }
 document.querySelectorAll('[data-stage]').forEach(el=>{const o=el.dataset;stage(el,{size:+(o.size||8),cam:+(o.cam||21),floaters:o.floaters!=='false'});});
