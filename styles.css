@@ -1,7 +1,7 @@
 
 /* Layout: a question becomes a lesson — split hero (ask box + live 3D mark), then the lesson story told in order: scenes, depth, ask-back, pipeline, examples. */
 :root{
-  color-scheme:light;
+  color-scheme:only light;
   --bg:#F6F4FD; --surface:#FFFFFF; --ink:#24124F; --sub:#5B4E86; --muted:#8478AE;
   --violet:#6A45E0; --violet-ink:#FFFFFF; --mint:#3CC17E; --mint-deep:#1F8A57; --lav:#ECE8FB; --line:#E4DEF7;
   --deep:#24124F; --deep-2:#4B2BB8; --deep-ink:#F3F0FF; --deep-sub:#C3B8EE;

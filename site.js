@@ -8,6 +8,8 @@ const Store={
   clear(){mem=null;try{localStorage.removeItem(KEY);}catch(e){}}
 };
 window.Viddora={Store};
+/* light theme only: clear the old dark-mode choice saved by an earlier version */
+try{localStorage.removeItem('viddora-theme');}catch(e){}document.documentElement.removeAttribute('data-theme');
 
 const PLANS={
   free:{name:'Free month',price:'$0',per:'for 30 days',allowance:60,note:'Up to 60 credits for your first 30 days'},
