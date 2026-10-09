@@ -1,0 +1,99 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>How viddora works</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap"><link rel="stylesheet" href="styles.css"><meta name="description" content="Ask anything. Watch it click. viddora turns any question into a narrated, animated video lesson in about two minutes."><meta property="og:title" content="viddora"><meta property="og:description" content="Any topic in, a narrated and animated lesson out, in about two minutes."><meta property="og:image" content="/assets/og.png"><meta name="theme-color" content="#24124F"><link rel="icon" type="image/png" href="/assets/viddora-mark-small.png"><link rel="apple-touch-icon" href="/assets/viddora-mark-small.png"></head><body><header class="nav"><div class="wrap">
+<a class="brand" href="index.html" aria-label="viddora home"><img src="assets/viddora-mark-small.png" alt="">viddora</a>
+<nav class="links" aria-label="Main"><a href="how-it-works.html" aria-current="page">How it works</a><a href="index.html#examples">Examples</a><a href="pricing.html">Pricing</a><a href="https://tutor-web-766jxfmqfa-uc.a.run.app/blog">Blog</a></nav>
+<div class="nav-cta">
+ <a class="btn btn-ghost signin" href="signin.html" data-auth="out">Sign in</a>
+ <a class="btn btn-primary" href="signup.html" data-auth="out">Start free</a>
+ <a class="me" href="account.html" data-auth="in" hidden aria-label="My account"><span class="cr"><span data-credits>0</span>&nbsp;credits</span><span class="avatar" data-initial>?</span></a>
+</div></div></header><main><section class="page-hero"><div class="glow a"></div><div class="glow b"></div><div class="wrap center"><span class="kicker">How it works</span><h1>One sentence in, a finished video out.</h1><p class="lede">About two minutes from question to lesson. You can watch each step happen and the scenes appear as they are made.</p></div></section>
+  <section class="block" id="how" style="padding-top:24px">
+    <div class="wrap">
+      
+      <div class="pipe">
+        <div class="pipe-total"><span>About two minutes for a 2-minute lesson</span><span>0 s — 115 s</span></div>
+        <div class="pipe-bar" aria-hidden="true"><i style="flex:15;background:var(--violet)"></i><i style="flex:10;background:#9B83F2"></i><i style="flex:60;background:var(--mint)"></i><i style="flex:30;background:#1D7C95"></i></div>
+        <div class="pipe-steps">
+          <div class="pstep"><span class="t"><i style="background:var(--violet)"></i>~15 s</span><h3>It writes the lesson</h3><p>A script for the depth you picked: one idea per scene, with what the narrator says and what you will see.</p></div>
+          <div class="pstep"><span class="t"><i style="background:#9B83F2"></i>~10 s</span><h3>It records the narration</h3><p>A natural voice reads every scene. Each word is timed, so captions and reveals land exactly when they are said.</p></div>
+          <div class="pstep"><span class="t"><i style="background:var(--mint)"></i>~60 s</span><h3>It animates every scene</h3><p>Each scene is drawn as a real animation of the thing being explained, then a vision model checks the frame before it is kept.</p></div>
+          <div class="pstep"><span class="t"><i style="background:#1D7C95"></i>~30 s</span><h3>It renders your video</h3><p>Scenes render in parallel at 1080p and are joined with the audio into one video you can watch or download.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="depth" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <span class="kicker">Your pace, your level</span>
+        <h2>The same topic, explained three ways.</h2>
+        <p class="lede">A newcomer and an engineer need different lessons. Pick the depth and viddora changes how it writes, what it draws and how much maths it shows.</p>
+      </div>
+      <div class="depths">
+        <article class="depth"><div class="meter"><i class="on"></i><i></i><i></i></div><span class="lvl">For newcomers</span><h3>Intuitive</h3><p>Starts with an everyday example, builds an easy picture and ends with a one-line recap.</p><blockquote>“Imagine a highway where everyone floors the gas at once…”</blockquote></article>
+        <article class="depth"><div class="meter"><i class="on"></i><i class="on"></i><i></i></div><span class="lvl">You know the basics</span><h3>Standard</h3><p>The real mechanism in the order it happens, with proper terms defined as they appear and one worked example.</p><blockquote>“The model keeps a running list of every word it has already processed. Engineers call it the cache.”</blockquote></article>
+        <article class="depth"><div class="meter"><i class="on"></i><i class="on"></i><i class="on"></i></div><span class="lvl">For engineers</span><h3>Deep dive</h3><p>Internals, real numbers and the maths: what it measures, the formula, then what the answer means.</p><blockquote>“Three point two eight gigabytes. That is three gigabytes of memory just to remember one chat.”</blockquote></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="lost">
+        <div class="glow"></div>
+        <div style="display:flex;flex-direction:column;gap:18px;position:relative;min-width:0">
+          <span class="kicker" style="color:var(--mint)">Ask the video</span>
+          <h2>Lost at one part? Press L.</h2>
+          <p class="lede">Every lesson knows what was being said at every second. Press “I'm lost here” and choose how you want it explained: simpler, with an example, or with what you need to know first.</p>
+          <ol><li>A clear answer in about five seconds.</li><li>A one-minute follow-up video about that exact moment, in the same style.</li><li>One click back to the second you left.</li></ol>
+        </div>
+        <figure class="player" style="margin:0;position:relative">
+          <svg viewBox="0 0 640 330" role="img" aria-label="A lesson frame: token four's key and value are appended to the cache">
+            <rect width="640" height="330" fill="#0A0420"/>
+            <text x="32" y="44" fill="#C3B8EE" font-family="Nunito,sans-serif" font-size="15" font-weight="700">KV cache · deep dive</text>
+            <g font-family="Quicksand,sans-serif" font-weight="700" font-size="15">
+              <g transform="translate(32,78)">
+                <text x="0" y="16" fill="#9488C4">keys</text>
+                <rect x="70" y="0" width="64" height="26" rx="7" fill="#6A45E0"/><rect x="142" y="0" width="64" height="26" rx="7" fill="#6A45E0"/><rect x="214" y="0" width="64" height="26" rx="7" fill="#6A45E0"/>
+                <rect x="286" y="0" width="64" height="26" rx="7" fill="#3CC17E"><animate attributeName="opacity" values=".35;1;1" dur="2.4s" repeatCount="indefinite"/></rect>
+                <text x="0" y="66" fill="#9488C4">values</text>
+                <rect x="70" y="50" width="64" height="26" rx="7" fill="#8F72F5"/><rect x="142" y="50" width="64" height="26" rx="7" fill="#8F72F5"/><rect x="214" y="50" width="64" height="26" rx="7" fill="#8F72F5"/>
+                <rect x="286" y="50" width="64" height="26" rx="7" fill="#4FD18E"><animate attributeName="opacity" values=".35;1;1" dur="2.4s" repeatCount="indefinite"/></rect>
+                <text x="94" y="112" fill="#F3F0FF" font-size="13">t1</text><text x="166" y="112" fill="#F3F0FF" font-size="13">t2</text><text x="238" y="112" fill="#F3F0FF" font-size="13">t3</text><text x="310" y="112" fill="#4FD18E" font-size="13">t4</text>
+                <path d="M420 38 h70" stroke="#4FD18E" stroke-width="3" stroke-dasharray="6 6"/><path d="M420 38 l14 -8 v16z" fill="#4FD18E"/>
+                <rect x="500" y="10" width="80" height="58" rx="14" fill="none" stroke="#4FD18E" stroke-width="2"/><text x="540" y="45" text-anchor="middle" fill="#F3F0FF" font-size="16">new</text>
+              </g>
+            </g>
+            <text x="32" y="270" fill="#F3F0FF" font-family="Nunito,sans-serif" font-size="17" font-weight="700">Append one key and one value. Never recompute the rest.</text>
+          </svg>
+          <div class="pbar"><span>1:42</span><span class="track" style="background:rgba(255,255,255,.14)"><i style="width:56%"></i></span><span>3:00</span><button class="lostbtn" id="lostBtn" aria-expanded="false" aria-controls="answer">I'm lost here</button></div>
+          <div class="answer" id="answer">
+            <div class="opts" role="group" aria-label="Explain it">
+              <button type="button" aria-pressed="true" data-a="0">Simpler</button><button type="button" aria-pressed="false" data-a="1">With an example</button><button type="button" aria-pressed="false" data-a="2">What I need first</button>
+            </div>
+            <p id="ansText">Each new word only needs its own key and value. The old ones are saved, so the model adds one row instead of redoing the whole table.</p>
+            <small>Follow-up clip ready in about a minute · Back to 1:42</small>
+          </div>
+          <figcaption>A real follow-up clip was made 77 seconds after a viewer asked “why does the cache grow with every token?”</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="faq" style="padding-top:0">
+    <div class="wrap faq">
+      <div class="head" style="margin:0"><span class="kicker">Questions</span><h2>Good to know.</h2></div>
+      <div>
+        <details open><summary>How long does it take to make a video?</summary><p>A two-minute lesson is usually ready in about two minutes. A five-minute deep dive takes around three. You can watch the scenes appear while it builds.</p></details>
+        <details><summary>What topics can it explain?</summary><p>Almost anything that can be drawn: science, maths, engineering, computing, economics, biology and how everyday things work. Type the topic the way you would ask a person.</p></details>
+        <details><summary>What is the difference between intuitive, standard and deep dive?</summary><p>Intuitive starts from an everyday picture for newcomers. Standard explains the real mechanism with the proper terms. Deep dive goes into the internals and the maths for technical viewers, while still defining every term it uses.</p></details>
+        <details><summary>What happens if I do not understand part of a video?</summary><p>Press “I'm lost here” (or L) while watching. You get a short answer in a few seconds, and a one-minute follow-up video about that exact moment is made for you, in the same visual style. A button takes you back to where you were.</p></details>
+        <details><summary>Is it accurate?</summary><p>Lessons are written to be precise, deep dives include worked numbers, and every scene is checked before it is kept. It is still AI-generated, so double-check facts before relying on them for anything important.</p></details>
+        <details><summary>Can I download the videos?</summary><p>Yes. Every finished lesson can be downloaded as a 1080p mp4 with narration and captions built in.</p></details>
+      </div>
+    </div>
+  </section>
+</main><footer><div class="wrap">
+<div style="display:flex;flex-direction:column;gap:10px;max-width:360px"><a class="brand" href="index.html"><img src="assets/viddora-mark-small.png" alt="">viddora</a><span style="color:var(--sub);font-weight:600">Any topic in, a narrated and animated lesson out, in about two minutes.</span></div>
+<nav aria-label="Footer"><a href="how-it-works.html">How it works</a><a href="pricing.html">Pricing</a><a href="https://tutor-web-766jxfmqfa-uc.a.run.app/blog">Blog</a><a href="account.html">My account</a><a href="signup.html">Make your first lesson</a></nav>
+<small style="flex-basis:100%">© 2026 viddora · Ask anything. Watch it click.</small></div></footer><script src="site.js"></script></body></html>

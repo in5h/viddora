@@ -1,0 +1,127 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>viddora · Ask anything. Watch it click.</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap"><link rel="stylesheet" href="styles.css"><script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script><meta name="description" content="Ask anything. Watch it click. viddora turns any question into a narrated, animated video lesson in about two minutes."><meta property="og:title" content="viddora · Ask anything. Watch it click."><meta property="og:description" content="Any topic in, a narrated and animated lesson out, in about two minutes."><meta property="og:image" content="/assets/og.png"><meta name="theme-color" content="#24124F"><link rel="icon" type="image/png" href="/assets/viddora-mark-small.png"><link rel="apple-touch-icon" href="/assets/viddora-mark-small.png"></head><body><header class="nav"><div class="wrap">
+<a class="brand" href="index.html" aria-label="viddora home"><img src="assets/viddora-mark-small.png" alt="">viddora</a>
+<nav class="links" aria-label="Main"><a href="how-it-works.html">How it works</a><a href="index.html#examples">Examples</a><a href="pricing.html">Pricing</a><a href="https://tutor-web-766jxfmqfa-uc.a.run.app/blog">Blog</a></nav>
+<div class="nav-cta">
+ <a class="btn btn-ghost signin" href="signin.html" data-auth="out">Sign in</a>
+ <a class="btn btn-primary" href="signup.html" data-auth="out">Start free</a>
+ <a class="me" href="account.html" data-auth="in" hidden aria-label="My account"><span class="cr"><span data-credits>0</span>&nbsp;credits</span><span class="avatar" data-initial>?</span></a>
+</div></div></header><main>
+  <section class="hero" id="top">
+    <div class="glow a"></div><div class="glow b"></div>
+    <div class="wrap">
+      <div class="hero-copy">
+        <h1><span>Ask anything.</span><span>Watch it click.</span></h1>
+        <p class="lede">Type a question the way you'd ask a friend. In about two minutes, viddora writes the lesson, narrates it and animates every scene, from a quick intuition to an engineer-level deep dive.</p>
+        <form class="ask" id="ask" novalidate>
+          <label class="sr" for="q">Your question</label>
+          <input id="q" name="q" autocomplete="off" placeholder="How do noise-cancelling headphones work?">
+          <div class="ask-row">
+            <div class="seg" role="group" aria-label="Depth" id="depthSeg">
+              <button type="button" aria-pressed="true" data-v="Intuitive">Intuitive</button>
+              <button type="button" aria-pressed="false" data-v="Standard">Standard</button>
+              <button type="button" aria-pressed="false" data-v="Deep dive">Deep dive</button>
+            </div>
+            <div class="seg" role="group" aria-label="Length in minutes" id="lenSeg"><button type="button" aria-pressed="false" data-v="1">1</button><button type="button" aria-pressed="true" data-v="2">2</button><button type="button" aria-pressed="false" data-v="3">3</button><button type="button" aria-pressed="false" data-v="5">5 min</button></div>
+            <button class="btn btn-primary" type="submit">Make my lesson</button>
+          </div>
+          <p class="err" id="err" hidden></p>
+          <div class="build" id="build" aria-live="polite">
+            <div class="bstep"><span class="dot"></span><span>Writing the lesson</span><time>~15 s</time></div>
+            <div class="bstep"><span class="dot"></span><span>Recording the narration</span><time>~10 s</time></div>
+            <div class="bstep"><span class="dot"></span><span>Animating every scene</span><time>~60 s</time></div>
+            <div class="bstep"><span class="dot"></span><span>Rendering in 1080p</span><time>~30 s</time></div>
+            <div class="ready" id="ready"><span id="readyText">Your lesson is ready.</span><a class="btn btn-mint" id="readyLink" href="signup.html">Create a free account to watch</a></div>
+          </div>
+        </form>
+        <div class="chips"><span>Try:</span>
+          <button class="chip" type="button">Why is the sky blue?</button>
+          <button class="chip" type="button">What is a KV cache?</button>
+          <button class="chip" type="button">Why is ½ + ⅓ not ⅖?</button>
+        </div>
+        <ul class="ticks"><li>Natural narration</li><li>Your choice of depth</li><li>Yours to watch and download</li></ul>
+      </div>
+      <div class="stage3d" id="hero3d" data-stage data-size="8.4" data-cam="22"><canvas aria-label="The viddora logo in 3D, turning slowly. Drag to turn it."></canvas><span class="hint">Drag to turn</span></div>
+    </div>
+  </section>
+
+  <section class="block" id="scenes">
+    <div class="wrap">
+      <div class="head">
+        <span class="kicker">One question, four scenes</span>
+        <h2>Follow an idea from everyday example to the moment it clicks.</h2>
+      </div>
+      <div class="scenes">
+        <ol class="scene-list" role="tablist" aria-label="Lesson scenes" id="sceneList">
+          <li><button role="tab" aria-selected="true" data-i="0"><span class="n">1</span><span><strong>The everyday question</strong><span class="d">Start from something you have heard yourself.</span></span></button></li>
+          <li><button role="tab" aria-selected="false" data-i="1"><span class="n">2</span><span><strong>See the idea</strong><span class="d">Draw the thing being explained.</span></span></button></li>
+          <li><button role="tab" aria-selected="false" data-i="2"><span class="n">3</span><span><strong>Understand the mechanism</strong><span class="d">Show what actually happens, in order.</span></span></button></li>
+          <li><button role="tab" aria-selected="false" data-i="3"><span class="n">4</span><span><strong>Make it click</strong><span class="d">One picture you will remember.</span></span></button></li>
+        </ol>
+        <div class="screen" role="tabpanel" aria-label="Scene preview">
+          <div class="q"><span class="pill mint">Intuitive</span><span class="pill ghost">How do noise-cancelling headphones work?</span></div>
+          <canvas id="waves" aria-hidden="true"></canvas>
+          <p class="cap" id="cap">An engine roars. You switch on your headphones. How does the noise disappear?</p>
+          <div class="bar"><span id="sceneNo">Scene 1 of 4</span><span class="track"><i id="trk"></i></span><span>2:00</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="examples" >
+    <div class="wrap">
+      <div class="head">
+        <span class="kicker">Made by viddora</span>
+        <h2>Real lessons, every scene animated.</h2>
+        <p class="lede">Frames from real lessons, unedited. No stock footage, no slides of bullet points.</p>
+      </div>
+      <div class="grid4">
+        <a class="ex" href="https://tutor-web-766jxfmqfa-uc.a.run.app/blog/kv-cache-explained"><div class="thumb"><svg viewBox="0 0 320 200" aria-hidden="true"><rect width="320" height="200" fill="#1B0D45"/><g transform="translate(40,70)"><rect x="0" y="0" width="50" height="22" rx="6" fill="#6A45E0"/><rect x="0" y="32" width="50" height="22" rx="6" fill="#8F72F5"/><rect x="58" y="0" width="50" height="22" rx="6" fill="#6A45E0"/><rect x="58" y="32" width="50" height="22" rx="6" fill="#8F72F5"/><rect x="116" y="0" width="50" height="22" rx="6" fill="#6A45E0"/><rect x="116" y="32" width="50" height="22" rx="6" fill="#8F72F5"/><rect x="174" y="0" width="50" height="22" rx="6" fill="#3CC17E"/><rect x="174" y="32" width="50" height="22" rx="6" fill="#4FD18E"/><text x="0" y="86" fill="#C3B8EE" font-family="Quicksand,sans-serif" font-weight="700" font-size="15">append, don’t recompute</text></g></svg><span class="pill mint">Deep dive</span></div><h3>KV caching in LLMs</h3><p>Recompute every token, or append one key and value.</p></a>
+        <div class="ex"><div class="thumb"><svg viewBox="0 0 320 200" aria-hidden="true"><rect width="320" height="200" fill="#1B0D45"/><path d="M0 150 C60 120 100 175 160 145 S260 120 320 150 V200 H0Z" fill="#6A45E0" opacity=".55"/><path d="M0 165 C70 150 110 185 170 165 S270 150 320 168 V200 H0Z" fill="#3CC17E" opacity=".6"/><text x="160" y="92" text-anchor="middle" fill="#F3F0FF" font-family="Quicksand,sans-serif" font-weight="700" font-size="17">ρ(∂u/∂t + u·∇u) = −∇p + μ∇²u</text></svg><span class="pill mint">Standard</span></div><h3>The Navier–Stokes equation</h3><p>Each term named and read aloud, with honey against water.</p></div>
+        <div class="ex"><div class="thumb"><svg viewBox="0 0 320 200" aria-hidden="true"><rect width="320" height="200" fill="#1B0D45"/><g transform="translate(70,100)"><circle r="44" fill="#2A1670"/><path d="M0 0 L0 -44 A44 44 0 0 1 0 44Z" fill="#8F72F5"/></g><text x="148" y="108" fill="#F3F0FF" font-family="Quicksand,sans-serif" font-weight="700" font-size="28">+</text><g transform="translate(222,100)"><circle r="44" fill="#2A1670"/><path d="M0 0 L0 -44 A44 44 0 0 1 38.1 22Z" fill="#4FD18E"/></g><text x="160" y="182" text-anchor="middle" fill="#C3B8EE" font-family="Quicksand,sans-serif" font-weight="700" font-size="17">½ + ⅓ = ⅚, not ⅖</text></svg><span class="pill mint">Intuitive</span></div><h3>Adding fractions</h3><p>Why a half plus a third is not two fifths.</p></div>
+        <div class="ex"><div class="thumb"><svg viewBox="0 0 320 200" aria-hidden="true"><defs><linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3B6FD8"/><stop offset="1" stop-color="#9FC4F5"/></linearGradient></defs><rect width="320" height="200" fill="url(#sky)"/><circle cx="62" cy="58" r="26" fill="#FFD66B"/><g stroke="#FFFFFF" stroke-width="2" stroke-dasharray="5 6" fill="none" opacity=".85"><path d="M92 62 L190 96"/><path d="M90 74 L188 120"/></g><g fill="#1B0D45"><circle cx="200" cy="100" r="5"/><circle cx="230" cy="128" r="5"/><circle cx="252" cy="88" r="5"/></g><g stroke="#2742B0" stroke-width="3" stroke-linecap="round"><path d="M200 100 l-14 -22"/><path d="M230 128 l18 -16"/><path d="M252 88 l20 6"/></g><path d="M0 178 Q160 150 320 178 V200 H0Z" fill="#1B0D45"/></svg><span class="pill mint">Intuitive</span></div><h3>Why the sky is blue</h3><p>Starting from what you see when you look up.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0">
+    <div class="wrap">
+      <div class="head"><span class="kicker">Who it is for</span><h2>For anyone who learns by seeing.</h2></div>
+      <div class="who">
+        <div><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2 9 2 12 0v-5"/></svg></span><h3>Students</h3><p>Turn the chapter you are stuck on into two minutes of pictures, then ask about the part that still does not click.</p></div>
+        <div><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg></span><h3>Engineers</h3><p>Get the deep-dive version of a system, a protocol or a paper's core idea, with the numbers worked through.</p></div>
+        <div><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></span><h3>Teachers</h3><p>Make a short animated explainer for tomorrow's class from one sentence, and download it as an mp4.</p></div>
+        <div><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 19c1-3 4-5 6-5s5 2 6 5M15 15c2 0 4 1 5 4"/></svg></span><h3>Teams</h3><p>Explain an internal concept once, clearly, and send the video instead of scheduling another walkthrough.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" style="padding-top:0"><div class="wrap" style="display:grid;gap:16px">
+   <div class="teaser"><div style="display:flex;flex-direction:column;gap:6px"><h3>See how a lesson is made</h3><p>The four steps, the three depths, and how “I'm lost here” works.</p></div><a class="btn btn-ghost" href="how-it-works.html">How it works</a></div>
+   <div class="teaser"><div style="display:flex;flex-direction:column;gap:6px"><h3>Your first month is free</h3><p>Up to 60 credits for 30 days. 1 credit is 1 minute of video.</p></div><a class="btn btn-primary" href="pricing.html">See pricing</a></div>
+  </div></section>
+  <section class="block" style="padding-top:0">
+    <div class="wrap" style="display:flex;flex-direction:column;gap:clamp(48px,7vw,80px)">
+      <a class="post" href="https://tutor-web-766jxfmqfa-uc.a.run.app/blog/kv-cache-explained">
+        <div class="thumb"><svg viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="320" height="200" fill="#1B0D45"/><g transform="translate(40,70)"><rect x="0" y="0" width="50" height="22" rx="6" fill="#6A45E0"/><rect x="0" y="32" width="50" height="22" rx="6" fill="#8F72F5"/><rect x="58" y="0" width="50" height="22" rx="6" fill="#6A45E0"/><rect x="58" y="32" width="50" height="22" rx="6" fill="#8F72F5"/><rect x="116" y="0" width="50" height="22" rx="6" fill="#6A45E0"/><rect x="116" y="32" width="50" height="22" rx="6" fill="#8F72F5"/><rect x="174" y="0" width="50" height="22" rx="6" fill="#3CC17E"/><rect x="174" y="32" width="50" height="22" rx="6" fill="#4FD18E"/><text x="0" y="86" fill="#C3B8EE" font-family="Quicksand,sans-serif" font-weight="700" font-size="15">append, don’t recompute</text></g></svg></div>
+        <div class="txt"><small>From the blog · October 1, 2026 · 8 min read</small><h3>KV Cache Explained: Why LLMs Don't Slow Down as They Write</h3><p>What the key-value cache stores, why it makes generation fast, how much GPU memory it takes, and the tricks that shrink it.</p></div>
+      </a>
+      <div class="cta">
+        <div class="glow a"></div><div class="glow b"></div>
+        <div class="cta-copy">
+          <span class="kicker">Follow your curiosity</span>
+          <h2>What have you always wanted explained?</h2>
+          <p class="lede">Type it the way you would ask a friend. Your first video is about two minutes away.</p>
+          <form class="ask" id="ask2" novalidate style="flex-direction:row;flex-wrap:wrap;align-items:center">
+            <label class="sr" for="q2">Your question</label>
+            <input id="q2" placeholder="Why do we have seasons?" style="flex:1 1 220px;min-width:0">
+            <button class="btn btn-primary" type="submit">Make my lesson</button>
+          </form>
+        </div>
+        <div class="stage3d" id="cta3d" data-stage data-size="7.4" data-cam="17" data-floaters="false"><canvas aria-hidden="true"></canvas></div>
+      </div>
+    </div>
+  </section>
+</main><footer><div class="wrap">
+<div style="display:flex;flex-direction:column;gap:10px;max-width:360px"><a class="brand" href="index.html"><img src="assets/viddora-mark-small.png" alt="">viddora</a><span style="color:var(--sub);font-weight:600">Any topic in, a narrated and animated lesson out, in about two minutes.</span></div>
+<nav aria-label="Footer"><a href="how-it-works.html">How it works</a><a href="pricing.html">Pricing</a><a href="https://tutor-web-766jxfmqfa-uc.a.run.app/blog">Blog</a><a href="account.html">My account</a><a href="signup.html">Make your first lesson</a></nav>
+<small style="flex-basis:100%">© 2026 viddora · Ask anything. Watch it click.</small></div></footer><script src="site.js"></script><script type="module" src="stage3d.js"></script></body></html>
