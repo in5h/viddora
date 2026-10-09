@@ -64,7 +64,7 @@ const ICON_MOON='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" str
 function paintTheme(){
   const dark=curTheme()==='dark';
   $$('[data-theme-toggle]').forEach(b=>{b.innerHTML=dark?ICON_SUN:ICON_MOON;b.setAttribute('aria-label',dark?'Switch to light mode':'Switch to dark mode');b.title=dark?'Light mode':'Dark mode';});
-  const m=$('meta[name="theme-color"]');if(m)m.content=dark?'#120A2C':'#F6F4FD';
+  const m=$('meta[name="theme-color"]');if(m)m.content=dark?'#1C0E42':'#F6F4FD';
 }
 function setTheme(t){root.classList.add('theming');root.dataset.theme=t;try{localStorage.setItem(THEME_KEY,t);}catch(e){}paintTheme();setTimeout(()=>root.classList.remove('theming'),350);}
 sysDark.addEventListener&&sysDark.addEventListener('change',paintTheme);
@@ -103,13 +103,13 @@ const TH={
  tcp:'<g stroke-width="3"><line x1="80" y1="40" x2="80" y2="170" stroke="#3B2A7A"/><line x1="240" y1="40" x2="240" y2="170" stroke="#3B2A7A"/><path d="M80 70 L236 92" stroke="#3CC17E"/><path d="M240 110 L84 132" stroke="#8F72F5"/><path d="M80 150 L236 168" stroke="#F3F0FF"/></g>',
  navier:'<path d="M0 150 C60 120 100 175 160 145 S260 120 320 150 V200 H0Z" fill="#6A45E0" opacity=".55"/><path d="M0 165 C70 150 110 185 170 165 S270 150 320 168 V200 H0Z" fill="#3CC17E" opacity=".6"/><text x="160" y="90" text-anchor="middle" fill="#F3F0FF" font-family="Quicksand,sans-serif" font-weight="700" font-size="17">ρ(∂u/∂t + u·∇u) = −∇p + μ∇²u</text>',
  fractions:'<g transform="translate(90,100)"><circle r="44" fill="#2A1670"/><path d="M0 0 L0 -44 A44 44 0 0 1 0 44Z" fill="#8F72F5"/></g><text x="160" y="110" text-anchor="middle" fill="#F3F0FF" font-family="Quicksand,sans-serif" font-weight="700" font-size="28">+</text><g transform="translate(230,100)"><circle r="44" fill="#2A1670"/><path d="M0 0 L0 -44 A44 44 0 0 1 38.1 22Z" fill="#4FD18E"/></g>',
- sky:'<rect width="320" height="200" fill="#3B6FD8"/><rect y="100" width="320" height="100" fill="#7FA8EE"/><circle cx="64" cy="58" r="26" fill="#FFD66B"/><g stroke="#fff" stroke-width="2" stroke-dasharray="5 6"><path d="M94 62 L190 96"/><path d="M92 74 L188 120"/></g><g fill="#1B0D45"><circle cx="200" cy="100" r="5"/><circle cx="232" cy="128" r="5"/><circle cx="254" cy="88" r="5"/></g><path d="M0 178 Q160 150 320 178 V200 H0Z" fill="#1B0D45"/>',
+ sky:'<rect width="320" height="200" fill="#3B6FD8"/><rect y="100" width="320" height="100" fill="#7FA8EE"/><circle cx="64" cy="58" r="26" fill="#FFD66B"/><g stroke="#fff" stroke-width="2" stroke-dasharray="5 6"><path d="M94 62 L190 96"/><path d="M92 74 L188 120"/></g><g fill="#24124F"><circle cx="200" cy="100" r="5"/><circle cx="232" cy="128" r="5"/><circle cx="254" cy="88" r="5"/></g><path d="M0 178 Q160 150 320 178 V200 H0Z" fill="#24124F"/>',
  headphones:'<path d="M110 120 a50 50 0 0 1 100 0" fill="none" stroke="#8F72F5" stroke-width="10" stroke-linecap="round"/><rect x="96" y="112" width="26" height="46" rx="10" fill="#3CC17E"/><rect x="198" y="112" width="26" height="46" rx="10" fill="#3CC17E"/><path d="M20 70 q15 -20 30 0 t30 0 t30 0" fill="none" stroke="#C3B8EE" stroke-width="3"/><path d="M230 70 h70" stroke="#C3B8EE" stroke-width="3"/>',
  supply:'<g stroke-width="4" fill="none"><path d="M60 40 V170 H280" stroke="#3B2A7A"/><path d="M80 50 L260 160" stroke="#8F72F5"/><path d="M80 160 L260 50" stroke="#3CC17E"/></g><circle cx="170" cy="105" r="7" fill="#F3F0FF"/>',
- leaf:'<path d="M160 165 C90 150 80 70 160 40 C240 70 230 150 160 165Z" fill="#3CC17E"/><path d="M160 165 V60" stroke="#1B0D45" stroke-width="4"/><circle cx="262" cy="46" r="22" fill="#FFD66B"/><g stroke="#FFD66B" stroke-width="3" stroke-dasharray="4 6"><path d="M240 60 L200 90"/><path d="M246 70 L210 108"/></g>',
+ leaf:'<path d="M160 165 C90 150 80 70 160 40 C240 70 230 150 160 165Z" fill="#3CC17E"/><path d="M160 165 V60" stroke="#24124F" stroke-width="4"/><circle cx="262" cy="46" r="22" fill="#FFD66B"/><g stroke="#FFD66B" stroke-width="3" stroke-dasharray="4 6"><path d="M240 60 L200 90"/><path d="M246 70 L210 108"/></g>',
  seasons:'<circle cx="160" cy="100" r="22" fill="#FFD66B"/><ellipse cx="160" cy="100" rx="120" ry="50" fill="none" stroke="#3B2A7A" stroke-width="3"/><circle cx="40" cy="100" r="12" fill="#3CC17E"/><circle cx="280" cy="100" r="12" fill="#8F72F5"/>'
 };
-function thumbSVG(k){return `<svg viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="320" height="200" fill="#1B0D45"/>${TH[k]||TH.headphones}</svg>`;}
+function thumbSVG(k){return `<svg viewBox="0 0 320 200" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="320" height="200" fill="#24124F"/>${TH[k]||TH.headphones}</svg>`;}
 window.Viddora.thumbSVG=thumbSVG;
 function guessKind(q){q=q.toLowerCase();return /sky|blue|light/.test(q)?'sky':/tcp|network|handshake|internet/.test(q)?'tcp':/cache|token|llm|model/.test(q)?'kv':/fraction|½|⅓|math/.test(q)?'fractions':/price|demand|supply|econom/.test(q)?'supply':/plant|leaf|photo/.test(q)?'leaf':/season|earth|orbit/.test(q)?'seasons':/fluid|flow|navier/.test(q)?'navier':'headphones';}
 
@@ -167,7 +167,7 @@ if(list){
       cx.fillStyle='#2A1670';cx.beginPath();cx.roundRect(28,mid-40,90,80,16);cx.fill();
       cx.fillStyle='#8F72F5';for(let i=0;i<3;i++)cx.fillRect(40+i*26,mid-26,16,52);
       for(let r=1;r<=4;r++){cx.beginPath();cx.arc(120,mid,((r*40+t*0.06)%170),-0.5,0.5);cx.strokeStyle='rgba(143,114,245,'+(0.8-r*.15)+')';cx.lineWidth=3;cx.stroke();}
-      cx.fillStyle='#4FD18E';cx.beginPath();cx.arc(w-80,mid,30,0,7);cx.fill();cx.fillStyle='#1B0D45';cx.beginPath();cx.arc(w-80,mid,12,0,7);cx.fill();
+      cx.fillStyle='#4FD18E';cx.beginPath();cx.arc(w-80,mid,30,0,7);cx.fill();cx.fillStyle='#24124F';cx.beginPath();cx.arc(w-80,mid,12,0,7);cx.fill();
       cx.fillStyle='#C3B8EE';cx.fillText('engine',40,mid+62);cx.fillText('your ear',w-108,mid+50);
     }else{
       cx.fillStyle='#C3B8EE';

@@ -18,7 +18,7 @@ function playShape(){const s=new THREE.Shape();const p=[[-0.5,-0.6],[-0.5,0.6],[
 function stage(el,{size=8,floaters=true,cam=21}={}){
   const canvas=el.querySelector('canvas');
   let r;try{r=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});}catch(e){el.innerHTML='<img src="assets/viddora-mark.png" alt="" style="position:absolute;inset:12%;width:76%;height:auto">';return;}
-  r.setPixelRatio(Math.min(devicePixelRatio||1,2));r.outputColorSpace=THREE.SRGBColorSpace;r.toneMapping=THREE.NoToneMapping;
+  el.classList.add('live');r.setPixelRatio(Math.min(devicePixelRatio||1,2));r.outputColorSpace=THREE.SRGBColorSpace;r.toneMapping=THREE.NoToneMapping;
   const sc=new THREE.Scene();const pm=new THREE.PMREMGenerator(r);sc.environment=pm.fromScene(new RoomEnvironment(),.04).texture;
   const camera=new THREE.PerspectiveCamera(30,1,.1,100);camera.position.set(0,0,cam);
   const key=new THREE.DirectionalLight(0xffffff,1.1);key.position.set(-5,7,6);sc.add(key);

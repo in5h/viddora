@@ -13,3 +13,10 @@ Vercel: import this repo, framework preset "Other", no build command, output dir
 
 ## Run locally
     python3 -m http.server 8080   # then open http://localhost:8080
+
+## Brand
+Follows viddora brand guidelines v1.0 (October 2026): Midnight #24124F, Violet #6A45E0, Mint #3CC17E,
+Lavender #ECE8FB, Mist #F6F4FD, White; violet gradient #7D5CEB → #4B2BB8 and mint gradient #52D392 → #22936A;
+Quicksand Bold headlines, Quicksand SemiBold spaced-capital labels, Nunito body. Logos and favicons in `assets/`
+come straight from the brand kit (`viddora-logo.png` on light, `viddora-logo-white.png` on midnight).
+Always write viddora in lowercase.
