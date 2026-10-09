@@ -652,3 +652,18 @@ a,button,summary,label,.chip,.lcard,[role="tab"],input[type=checkbox],input[type
 /* no text highlighting or caret on page text (click, double-click, drag); typing fields work as normal */
 html{-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
 input,textarea,[contenteditable="true"]{-webkit-user-select:text;user-select:text}
+
+/* nav: Home/Dashboard, FAQs, Create */
+.links{gap:clamp(14px,1.8vw,24px)}
+.btn-create{min-height:42px;padding:0 16px 0 13px;gap:6px}
+.btn-create svg{margin-top:-1px}
+@media (max-width:1060px){.links a[href*="/blog"]{display:none}}
+@media (max-width:860px){.nav-cta .btn-create{display:none}}
+/* FAQ page */
+.faq-search{width:min(560px,100%);margin:8px auto 0}
+.faq-search input{text-align:left}
+.faq-jump{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:4px}
+.faq-jump a{text-decoration:none;font-weight:700;font-size:14px;color:var(--sub);background:#fff;border:var(--card-edge);border-radius:var(--r-pill);padding:7px 14px;box-shadow:var(--lift-1);transition:color .15s,border-color .15s}
+.faq-jump a:hover{color:var(--violet);border-color:var(--violet)}
+.faq-group{scroll-margin-top:96px}
+.faq-empty{margin-bottom:24px}

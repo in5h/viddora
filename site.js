@@ -10,6 +10,9 @@ const Store={
 window.Viddora={Store};
 /* light theme only: clear the old dark-mode choice saved by an earlier version */
 try{localStorage.removeItem('viddora-theme');}catch(e){}document.documentElement.removeAttribute('data-theme');
+/* no blinking text cursor in page text: if a click (or caret browsing) drops one outside a typing field, clear it */
+const editable=el=>el&&(el.isContentEditable||/^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName));
+document.addEventListener('selectionchange',()=>{const s=getSelection();if(s&&s.rangeCount&&!editable(document.activeElement)){const n=s.anchorNode,el=n&&(n.nodeType===1?n:n.parentElement);if(!editable(el))s.removeAllRanges();}});
 
 const PLANS={
   free:{name:'Free month',price:'$0',per:'for 30 days',allowance:60,note:'Up to 60 credits for your first 30 days'},
@@ -70,6 +73,7 @@ function paintNav(){
   $$('[data-auth="new"]').forEach(e=>e.hidden=!!acc||back);
   $$('[data-auth="returning"]').forEach(e=>e.hidden=!!acc||!back);
   $$('[data-auth="in"]').forEach(e=>e.hidden=!acc);
+  $$('[data-auth="guest"]').forEach(e=>e.hidden=!!acc);
   if(acc){$$('[data-credits]').forEach(e=>e.textContent=acc.credits);$$('[data-initial]').forEach(e=>e.textContent=(acc.name||'?').trim().charAt(0).toUpperCase());}
 }
 paintNav();window.Viddora.paintNav=paintNav;
@@ -83,7 +87,7 @@ if(header&&cta){
   cta.appendChild(mb);
   const mn=document.createElement('nav');mn.id='mnav';mn.className='mnav';mn.setAttribute('aria-label','Menu');mn.hidden=true;
   const links=$('.links',header);
-  mn.innerHTML='<div class="wrap">'+(links?links.innerHTML:'')+'<a class="btn btn-primary" data-auth="new" href="signup.html">Start free</a><a class="btn btn-primary" data-auth="returning" href="signin.html">Sign in</a><a class="btn btn-primary" data-auth="in" href="account.html">My account</a></div>';
+  mn.innerHTML='<div class="wrap">'+(links?links.innerHTML:'')+'<a class="btn btn-primary" data-auth="new" href="signup.html">Start free</a><a class="btn btn-primary" data-auth="returning" href="signin.html">Sign in</a><a class="btn btn-primary" data-auth="in" href="index.html#create">+ Create a lesson</a></div>';
   header.appendChild(mn);
   const setMenu=open=>{mn.hidden=!open;mb.setAttribute('aria-expanded',String(open));mb.setAttribute('aria-label',open?'Close menu':'Open menu');header.classList.toggle('menu-open',open);};
   mb.addEventListener('click',()=>setMenu(mn.hidden));
@@ -147,6 +151,9 @@ if(form){
       ready.classList.add('on');window.dispatchEvent(new Event('lessonready'));
     },t));
   });
+  const toCreate=()=>{if(location.hash!=='#create')return;$('#top').scrollIntoView({block:'start'});setTimeout(()=>{q.focus({preventScroll:true});q.select();},250);};
+  addEventListener('hashchange',toCreate);toCreate();
+  $$('a[href="index.html#create"]').forEach(l=>l.addEventListener('click',e=>{if(location.hash==='#create'){e.preventDefault();toCreate();}}));
   const f2=$('#ask2');
   f2&&f2.addEventListener('submit',e=>{e.preventDefault();q.value=$('#q2').value.trim()||'Why do we have seasons?';$('#top').scrollIntoView();setTimeout(()=>form.requestSubmit(),350);});
 }
@@ -243,4 +250,13 @@ if(pend&&authCard&&($('#signinForm')||$('#signupForm'))){const n=document.create
   n.innerHTML='<b>Your lesson is ready.</b> '+($('#signupForm')?'Create your account':'Sign in')+' to watch “'+pend.t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))+'”.';
   authCard.insertBefore(n,authCard.children[1]);}
 const wel=sget('viddora-welcome');if(wel&&$('#acct')){sset('viddora-welcome',null);setTimeout(()=>toast(wel),450);}
+
+/* ---------- FAQ search ---------- */
+const fq=$('#faqq');
+if(fq){
+  const items=$$('.faq-group details'),empty=$('#faqEmpty');
+  fq.addEventListener('input',()=>{const t=fq.value.trim().toLowerCase();let shown=0;
+    items.forEach(d=>{const hit=!t||d.textContent.toLowerCase().includes(t);d.hidden=!hit;if(hit){shown++;if(t)d.open=true;}});
+    $$('.faq-group').forEach(g=>g.hidden=!$$('details',g).some(d=>!d.hidden));empty.hidden=shown>0;});
+}
 })();

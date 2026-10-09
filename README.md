@@ -2,7 +2,7 @@
 
 Static multi-page frontend for viddora ("Ask anything. Watch it click.").
 
-Pages: Home, How it works, Pricing, Sign in, Sign up, My account (lessons, credit history, plan and billing).
+Pages: Home, How it works, Pricing, FAQs, Sign in, Sign up, Dashboard (lessons, credit history, plan and billing).
 The 3D logo is rendered with three.js (loaded from jsDelivr). Accounts, credits and lessons are a
 front-end demo stored in the browser's localStorage; there is no backend yet.
 

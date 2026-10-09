@@ -16,8 +16,8 @@ function render(){
   const counts={All:a.lessons.length};['Intuitive','Standard','Deep dive'].forEach(d=>counts[d]=a.lessons.filter(l=>l.d===d).length);
   root.innerHTML=`
   <div class="acct-head">
-    <div style="display:flex;flex-direction:column;gap:6px"><span class="kicker">My account</span><h1>Hi, ${esc(a.name.split(' ')[0])}.</h1><p>${esc(a.email)}${a.example?' · example data':''}</p></div>
-    <a class="btn btn-primary" href="index.html#top">Make a new lesson</a>
+    <div style="display:flex;flex-direction:column;gap:6px"><span class="kicker">Dashboard</span><h1>Hi, ${esc(a.name.split(' ')[0])}.</h1><p>${esc(a.email)}${a.example?' · example data':''}</p></div>
+    <a class="btn btn-primary" href="index.html#create">Create a lesson</a>
   </div>
   <div class="stats">
     <section class="stat" aria-labelledby="s1"><h2 id="s1">Credits left</h2>
@@ -46,7 +46,7 @@ function render(){
 
 function panel(a,p,counts){
   if(tab==='lessons'){
-    if(!a.lessons.length)return `<div class="empty"><h3>No lessons yet</h3><p>Ask your first question and it will appear here, ready to watch, download or share.</p><a class="btn btn-primary" href="index.html#top">Make your first lesson</a></div>`;
+    if(!a.lessons.length)return `<div class="empty"><h3>No lessons yet</h3><p>Ask your first question and it will appear here, ready to watch, download or share.</p><a class="btn btn-primary" href="index.html#create">Make your first lesson</a></div>`;
     const list=a.lessons.filter(l=>(filter==='All'||l.d===filter)&&l.t.toLowerCase().includes(query.toLowerCase()));
     return `<div class="toolbar"><div class="seg" role="group" aria-label="Filter by depth" id="fseg">${['All','Intuitive','Standard','Deep dive'].map(d=>`<button type="button" aria-pressed="${filter===d}" data-f="${d}">${d} ${counts[d]}</button>`).join('')}</div>
       <div class="field"><label class="sr" for="lsearch">Search lessons</label><input type="search" id="lsearch" placeholder="Search your lessons" value="${esc(query)}"></div></div>
@@ -109,7 +109,7 @@ function openLesson(l){
   const pb=$('.playbig',modal);pb&&(pb.onclick=()=>V.toast('Playback works in the full app'));
   const dl=$('[data-dl]',modal);dl&&(dl.onclick=()=>V.toast('Download starts in the full app'));
   const sh=$('[data-share]',modal);sh&&(sh.onclick=async()=>{try{await navigator.clipboard.writeText('https://viddora.com/l/'+l.id);V.toast('Share link copied');}catch(e){V.toast('viddora.com/l/'+l.id);}});
-  const rt=$('[data-retry]',modal);rt&&(rt.onclick=()=>{location.href='index.html#top';});
+  const rt=$('[data-retry]',modal);rt&&(rt.onclick=()=>{location.href='index.html#create';});
 }
 let lastFocus=null;
 function closeLesson(){if(!modal.classList.contains('on'))return;modal.classList.remove('on');document.body.classList.remove('locked');lastFocus&&lastFocus.isConnected&&lastFocus.focus();}
