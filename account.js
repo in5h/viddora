@@ -50,7 +50,7 @@ function panel(a,p,counts){
     const list=a.lessons.filter(l=>(filter==='All'||l.d===filter)&&l.t.toLowerCase().includes(query.toLowerCase()));
     return `<div class="toolbar"><div class="seg" role="group" aria-label="Filter by depth" id="fseg">${['All','Intuitive','Standard','Deep dive'].map(d=>`<button type="button" aria-pressed="${filter===d}" data-f="${d}">${d} ${counts[d]}</button>`).join('')}</div>
       <div class="field"><label class="sr" for="lsearch">Search lessons</label><input type="search" id="lsearch" placeholder="Search your lessons" value="${esc(query)}"></div></div>
-      ${list.length?`<div class="lgrid">${list.map(l=>`<button class="lcard" type="button" data-open="${l.id}"><div class="thumb">${V.thumbSVG(l.k)}<span class="len">${l.m}:00</span><span class="state">${l.s==='failed'?'<span class="badge fail">Failed · refunded</span>':l.clip?'<span class="badge clip">Follow-up clip</span>':''}</span></div><h3>${esc(l.t)}</h3><span class="info"><span class="dtag">${l.d}</span>${V.fmtDate(l.date)} · ${l.s==='failed'?'0 credits':l.m+' credit'+(l.m>1?'s':'')}</span></button>`).join('')}</div>`
+      ${list.length?`<div class="lgrid">${list.map(l=>`<button class="lcard" type="button" data-open="${l.id}"><div class="thumb">${V.thumbSVG(l.k)}${l.s==='failed'?'':'<span class="play" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z" fill="currentColor"/></svg></span>'}<span class="len">${l.m}:00</span><span class="state">${l.s==='failed'?'<span class="badge fail">Failed · refunded</span>':l.clip?'<span class="badge clip">Follow-up clip</span>':''}</span></div><h3>${esc(l.t)}</h3><span class="info"><span class="dtag">${l.d}</span>${V.fmtDate(l.date)} · ${l.s==='failed'?'0 credits':l.m+' credit'+(l.m>1?'s':'')}</span></button>`).join('')}</div>`
       :`<div class="empty"><h3>No lessons match</h3><p>Try another word or show all depths.</p></div>`}`;
   }
   if(tab==='credits'){
@@ -105,14 +105,17 @@ function openLesson(l){
   $('#mMeta').textContent=`${l.d} · ${l.m} min · ${V.fmtDate(l.date)}`+(l.s==='failed'?' · render failed, credits refunded':'');
   $('#mVid').innerHTML=V.thumbSVG(l.k)+(l.s==='failed'?'':'<button class="playbig" type="button" aria-label="Play lesson"><svg width="26" height="26" viewBox="0 0 24 24"><path d="M7 4.5v15l12-7.5z" fill="#6A45E0"/></svg></button>');
   $('#mActions').innerHTML=l.s==='failed'?'<button class="btn btn-primary btn-sm" type="button" data-retry>Try again</button>':'<button class="btn btn-primary btn-sm" type="button" data-dl>Download 1080p</button><button class="btn btn-ghost btn-sm" type="button" data-share>Copy share link</button>';
-  modal.classList.add('on');$('#mClose').focus();
+  lastFocus=document.activeElement;modal.classList.add('on');document.body.classList.add('locked');$('#mClose').focus();
   const pb=$('.playbig',modal);pb&&(pb.onclick=()=>V.toast('Playback works in the full app'));
   const dl=$('[data-dl]',modal);dl&&(dl.onclick=()=>V.toast('Download starts in the full app'));
   const sh=$('[data-share]',modal);sh&&(sh.onclick=async()=>{try{await navigator.clipboard.writeText('https://viddora.com/l/'+l.id);V.toast('Share link copied');}catch(e){V.toast('viddora.com/l/'+l.id);}});
   const rt=$('[data-retry]',modal);rt&&(rt.onclick=()=>{location.href='index.html#top';});
 }
-$('#mClose').onclick=()=>modal.classList.remove('on');
-modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.remove('on');});
-addEventListener('keydown',e=>{if(e.key==='Escape')modal.classList.remove('on');});
+let lastFocus=null;
+function closeLesson(){if(!modal.classList.contains('on'))return;modal.classList.remove('on');document.body.classList.remove('locked');lastFocus&&lastFocus.isConnected&&lastFocus.focus();}
+$('#mClose').onclick=closeLesson;
+modal.addEventListener('click',e=>{if(e.target===modal)closeLesson();});
+addEventListener('keydown',e=>{if(!modal.classList.contains('on'))return;if(e.key==='Escape')closeLesson();
+  if(e.key==='Tab'){const f=$$('button,a[href]',modal).filter(x=>x.offsetParent);const a=f[0],z=f[f.length-1];if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus();}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus();}}});
 render();
 })();

@@ -56,6 +56,47 @@ function paintNav(){
 }
 paintNav();window.Viddora.paintNav=paintNav;
 
+/* ---------- theme: light / dark (follows the system until the visitor picks) ---------- */
+const THEME_KEY='viddora-theme',root=document.documentElement,sysDark=matchMedia('(prefers-color-scheme: dark)');
+const curTheme=()=>root.dataset.theme||(sysDark.matches?'dark':'light');
+const ICON_SUN='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>';
+const ICON_MOON='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.5A8.5 8.5 0 1 1 9.5 3.5a7 7 0 0 0 11 11z"/></svg>';
+function paintTheme(){
+  const dark=curTheme()==='dark';
+  $$('[data-theme-toggle]').forEach(b=>{b.innerHTML=dark?ICON_SUN:ICON_MOON;b.setAttribute('aria-label',dark?'Switch to light mode':'Switch to dark mode');b.title=dark?'Light mode':'Dark mode';});
+  const m=$('meta[name="theme-color"]');if(m)m.content=dark?'#120A2C':'#F6F4FD';
+}
+function setTheme(t){root.classList.add('theming');root.dataset.theme=t;try{localStorage.setItem(THEME_KEY,t);}catch(e){}paintTheme();setTimeout(()=>root.classList.remove('theming'),350);}
+sysDark.addEventListener&&sysDark.addEventListener('change',paintTheme);
+
+/* ---------- nav: theme button, mobile menu, scrolled state ---------- */
+const header=$('header.nav'),cta=$('.nav-cta');
+if(header&&cta){
+  const tb=document.createElement('button');tb.type='button';tb.className='icon-btn';tb.setAttribute('data-theme-toggle','');
+  tb.addEventListener('click',()=>setTheme(curTheme()==='dark'?'light':'dark'));cta.prepend(tb);
+  const mb=document.createElement('button');mb.type='button';mb.className='icon-btn menu-btn';mb.setAttribute('aria-expanded','false');mb.setAttribute('aria-controls','mnav');mb.setAttribute('aria-label','Open menu');
+  mb.innerHTML='<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path class="l1" d="M4 7h16"/><path class="l2" d="M4 12h16"/><path class="l3" d="M4 17h16"/></svg>';
+  cta.appendChild(mb);
+  const mn=document.createElement('nav');mn.id='mnav';mn.className='mnav';mn.setAttribute('aria-label','Menu');mn.hidden=true;
+  const links=$('.links',header);
+  mn.innerHTML='<div class="wrap">'+(links?links.innerHTML:'')+'<div class="mnav-cta" data-auth="out"><a class="btn btn-ghost" href="signin.html">Sign in</a><a class="btn btn-primary" href="signup.html">Start free</a></div><a class="btn btn-primary" data-auth="in" href="account.html">My account</a></div>';
+  header.appendChild(mn);
+  const setMenu=open=>{mn.hidden=!open;mb.setAttribute('aria-expanded',String(open));mb.setAttribute('aria-label',open?'Close menu':'Open menu');header.classList.toggle('menu-open',open);};
+  mb.addEventListener('click',()=>setMenu(mn.hidden));
+  mn.addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false);});
+  addEventListener('keydown',e=>{if(e.key==='Escape'&&!mn.hidden){setMenu(false);mb.focus();}});
+  matchMedia('(min-width:861px)').addEventListener('change',e=>{if(e.matches)setMenu(false);});
+  const onScroll=()=>header.classList.toggle('scrolled',scrollY>8);addEventListener('scroll',onScroll,{passive:true});onScroll();
+  paintTheme();paintNav();
+}
+
+/* ---------- gentle reveal on scroll ---------- */
+if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const els=$$('main .head, .scenes, .depth, .ex, .who > div, .teaser, .post, .cta, .pipe, .lost, .plan, .addon, .calc .tablewrap, .faq details');
+  const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}}),{rootMargin:'0px 0px -8% 0px'});
+  els.forEach((el,i)=>{const r=el.getBoundingClientRect();if(r.top<innerHeight)return;el.classList.add('reveal');el.style.transitionDelay=((i%4)*60)+'ms';io.observe(el);});
+}
+
 /* ---------- thumbnails ---------- */
 const TH={
  kv:'<g transform="translate(40,62)">'+[0,1,2,3].map(i=>`<rect x="${i*58}" y="0" width="50" height="22" rx="6" fill="${i<3?'#6A45E0':'#3CC17E'}"/><rect x="${i*58}" y="32" width="50" height="22" rx="6" fill="${i<3?'#8F72F5':'#4FD18E'}"/>`).join('')+'</g>',
@@ -81,17 +122,20 @@ if(form){
   lseg&&lseg.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;len=+b.dataset.v;$$('button',lseg).forEach(x=>x.setAttribute('aria-pressed',String(x===b)));});
   const q=$('#q'),build=$('#build'),err=$('#err'),ready=$('#ready');
   $$('.chip').forEach(c=>c.addEventListener('click',()=>{q.value=c.textContent;q.focus();}));
+  addEventListener('keydown',e=>{if(e.key==='/'&&!e.metaKey&&!e.ctrlKey&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();q.focus();q.select();}});
+  const go=$('button[type=submit]',form);
   let timers=[];
   form.addEventListener('submit',e=>{
     e.preventDefault();const v=q.value.trim();const acc=Store.get();
     if(v.split(/\s+/).filter(Boolean).length<2){err.textContent='Type a question of at least two words, for example “Why is the sky blue?”';err.hidden=false;q.focus();return;}
     if(acc&&acc.credits<len){err.innerHTML=`This lesson needs ${len} credits and you have ${acc.credits}. <a class="muted-link" href="pricing.html">Add credits</a>`;err.hidden=false;return;}
     err.hidden=true;timers.forEach(clearTimeout);timers=[];
+    go.disabled=true;go.classList.add('busy');
     const steps=$$('.bstep',build);steps.forEach(s=>s.className='bstep');ready.classList.remove('on');build.classList.add('on');
     const d=[700,500,1600,900];let t=0;
     steps.forEach((s,i)=>{timers.push(setTimeout(()=>{if(i)steps[i-1].className='bstep done';s.className='bstep doing';},t));t+=d[i];});
     timers.push(setTimeout(()=>{
-      steps[3].className='bstep done';
+      steps[3].className='bstep done';go.disabled=false;go.classList.remove('busy');
       const a=Store.get();
       if(a){a.lessons.unshift({id:'n'+Date.now(),t:v.charAt(0).toUpperCase()+v.slice(1),d:depth,m:len,date:'2026-10-09',s:'ready',k:guessKind(v)});a.credits-=len;a.spent+=len;Store.set(a);paintNav();
         $('#readyText').textContent=`Ready · ${len} credits used · ${a.credits} left`;$('#readyLink').textContent='Open in My account';$('#readyLink').href='account.html';}
@@ -172,6 +216,9 @@ if(si){
 }
 const su=$('#signupForm');
 if(su){
+  const pw=$('#su-pass'),meter=$('#pwStrength'),hint=$('#pwHint');
+  pw&&meter&&pw.addEventListener('input',()=>{const v=pw.value;let sc=0;if(v.length>=8)sc++;if(v.length>=12)sc++;if(/[A-Z]/.test(v)&&/[a-z]/.test(v))sc++;if(/\d/.test(v)&&/[^A-Za-z0-9]/.test(v))sc++;if(v.length<8)sc=Math.min(sc,1);
+    meter.dataset.s=v?sc:'';hint.textContent=!v?'At least 8 characters.':v.length<8?`${8-v.length} more character${8-v.length===1?'':'s'} to go.`:['Okay','Okay','Good','Strong','Very strong'][sc]+' password.';});
   const h=location.hash.replace('#','');if(PLANS[h]){const r=$(`input[name=plan][value=${h}]`);if(r)r.checked=true;}
   su.addEventListener('submit',e=>{e.preventDefault();
     const nm=$('#su-name'),em=$('#su-email'),pw=$('#su-pass'),tc=$('#su-terms');let ok=true;
