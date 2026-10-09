@@ -644,3 +644,8 @@ footer{background:rgba(255,255,255,.55);border-top:var(--card-edge)}
 .auth-form .auth-card{padding-inline:0}
 @media (max-width:900px){.auth{margin-top:10px;padding-inline:10px;min-height:0}.auth-art{margin:0;min-height:260px}.auth-form .auth-card{padding-inline:8px}}
 @media (max-width:900px){.auth-art .stage3d{left:auto;right:-2%;width:56%;max-width:none;min-height:0}.auth-art blockquote{max-width:52%;font-size:17px}}
+
+/* text cursor only where you can type: no I-beam or blinking caret over regular page text */
+html{cursor:default;caret-color:transparent}
+input,textarea,[contenteditable="true"]{cursor:text;caret-color:var(--violet)}
+a,button,summary,label,.chip,.lcard,[role="tab"],input[type=checkbox],input[type=radio]{cursor:pointer}
