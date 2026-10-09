@@ -2,10 +2,10 @@
 /* Layout: a question becomes a lesson — split hero (ask box + live 3D mark), then the lesson story told in order: scenes, depth, ask-back, pipeline, examples. */
 :root{
   color-scheme:only light;
-  --bg:#F6F4FD; --surface:#FFFFFF; --ink:#24124F; --sub:#5B4E86; --muted:#8478AE;
-  --violet:#6A45E0; --violet-ink:#FFFFFF; --mint:#3CC17E; --mint-deep:#1F8A57; --lav:#ECE8FB; --line:#E4DEF7;
+  --bg:#ECE8FB; --surface:#FFFFFF; --ink:#24124F; --sub:#5B4E86; --muted:#8478AE;
+  --violet:#6A45E0; --violet-ink:#FFFFFF; --mint:#3CC17E; --mint-deep:#1F8A57; --lav:#E4DDFA; --line:#E2DBF6;
   --deep:#24124F; --deep-2:#4B2BB8; --deep-ink:#F3F0FF; --deep-sub:#C3B8EE;
-  --glow-a:#DCD3FA; --glow-b:#CDEFDD; --shadow:rgba(36,18,79,.10); --bad-bg:#FBE3E5; --bad-ink:#9D2733;
+  --glow-a:#DCD3FA; --glow-b:#CDEFDD; --shadow:rgba(36,18,79,.12); --bad-bg:#FBE3E5; --bad-ink:#9D2733;
   --display:'Quicksand','Nunito',ui-rounded,'Segoe UI',system-ui,sans-serif;
   --body:'Nunito','Quicksand',ui-rounded,'Segoe UI',system-ui,sans-serif;
   --r-card:22px; --r-pill:999px; --gutter:clamp(16px,4vw,40px);
@@ -585,3 +585,62 @@ h1,h2{line-height:1}
 .hero .glow,.page-hero .glow{opacity:.95}
 body{background:radial-gradient(1200px 700px at 100% 0%,rgba(220,211,250,.35),transparent 60%),radial-gradient(900px 600px at 0% 100%,rgba(205,239,221,.28),transparent 60%),var(--bg);background-attachment:fixed}
 .mnav .wrap > .btn{margin-top:16px}
+
+/* ---------- depth: raised cards on a lavender page ---------- */
+:root{
+  --lift-1:0 1px 2px rgba(36,18,79,.05),0 6px 18px -10px rgba(36,18,79,.18);
+  --lift-2:0 1px 0 rgba(255,255,255,.9) inset,0 2px 6px rgba(36,18,79,.05),0 24px 48px -24px rgba(36,18,79,.28);
+  --lift-3:0 1px 0 #fff inset,0 2px 4px rgba(36,18,79,.04),0 18px 40px -18px rgba(36,18,79,.22),0 50px 90px -40px rgba(75,43,184,.30);
+  --card-edge:1px solid rgba(106,69,224,.13);
+}
+body{background:radial-gradient(1100px 700px at 100% -10%,rgba(205,193,248,.55),transparent 60%),radial-gradient(900px 640px at -10% 105%,rgba(196,236,214,.55),transparent 60%),var(--bg);background-attachment:fixed}
+.seg,.aud{background:color-mix(in srgb,var(--violet) 9%,transparent)}
+.depth,.plan,.addon,.teaser,.post,.stat,.card,.lcard,.pipe,.tablewrap,.chip,.ask,.planpick label,.field input[type=text],.field input[type=email],.field input[type=password],.field input[type=search]{box-shadow:var(--lift-1);border-color:rgba(106,69,224,.12)}
+.depth:hover,.addon:hover,.plan:hover,.lcard:hover{box-shadow:var(--lift-2)}
+.ask{box-shadow:var(--lift-2)}
+.ask:focus-within{box-shadow:var(--lift-2),0 0 0 4px color-mix(in srgb,var(--violet) 16%,transparent)}
+.plan.hl{box-shadow:0 30px 60px -24px rgba(75,43,184,.55)}
+footer{background:rgba(255,255,255,.55);border-top:var(--card-edge)}
+
+/* hero as a raised card, glows inside it (like the closing "What have you always wanted explained?" card) */
+.hero,.page-hero{overflow:visible;padding:16px var(--gutter) 0}
+.hero > .hero-card,.page-hero > .hero-card{position:relative;overflow:hidden;max-width:1180px;margin-inline:auto;
+  padding-inline:clamp(20px,5vw,64px);border-radius:24px;border:var(--card-edge);box-shadow:var(--lift-3);
+  background:linear-gradient(180deg,#FFFFFF 0%,#FDFCFF 55%,#F8F6FE 100%);isolation:isolate}
+.hero-card > :not(.glow){position:relative;z-index:1}
+.hero-card .glow{z-index:0}
+.hero .hero-card .glow.a{width:640px;height:640px;right:-160px;top:-220px;background:#DCD3FA;opacity:.95}
+.hero .hero-card .glow.b{width:520px;height:520px;left:-200px;bottom:-260px;background:#CDEFDD;opacity:.95}
+.page-hero .hero-card .glow.a{width:520px;height:520px;right:-180px;top:-260px;background:#DCD3FA}
+.page-hero .hero-card .glow.b{width:420px;height:420px;left:-180px;bottom:-260px;background:#CDEFDD}
+.hero .hero-card{padding-block:clamp(36px,5vw,64px)}
+.page-hero .hero-card{max-width:1180px;padding-block:clamp(40px,6vw,72px)}
+.cta{box-shadow:var(--lift-3);border:var(--card-edge);background:linear-gradient(180deg,#FFFFFF,#FBFAFF)}
+@media (max-width:900px){.hero .hero-card{padding-block:28px 36px}}
+@media (max-width:560px){.hero,.page-hero{padding:10px 10px 0}.hero > .hero-card,.page-hero > .hero-card{border-radius:22px;padding-inline:18px}}
+
+/* nav as a floating glass card */
+.nav{top:0;padding:12px var(--gutter) 0;background:transparent;border-bottom:0;backdrop-filter:none;-webkit-backdrop-filter:none}
+.nav > .wrap{max-width:1180px;min-height:64px;padding-inline:18px 10px;border-radius:20px;border:var(--card-edge);
+  background:rgba(255,255,255,.80);-webkit-backdrop-filter:blur(16px) saturate(1.5);backdrop-filter:blur(16px) saturate(1.5);
+  box-shadow:0 1px 0 #fff inset,0 10px 30px -16px rgba(36,18,79,.30);transition:box-shadow .25s,background-color .25s}
+.nav.scrolled{box-shadow:none;background:transparent}
+.nav.scrolled > .wrap{background:rgba(255,255,255,.92);box-shadow:0 1px 0 #fff inset,0 16px 40px -16px rgba(36,18,79,.38)}
+.nav .mnav{max-width:1180px;margin:8px auto 0;border:var(--card-edge);border-radius:20px;background:rgba(255,255,255,.96);box-shadow:var(--lift-2);overflow:hidden}
+.nav .mnav .wrap{padding-inline:18px}
+@media (max-width:560px){.nav{padding:10px 10px 0}.nav > .wrap{padding-inline:12px 8px;min-height:58px;border-radius:18px}}
+.auth{min-height:calc(100vh - 76px)}
+.auth-art{margin:16px var(--gutter) 16px 0;border-radius:24px;box-shadow:var(--lift-3)}
+@media (max-width:900px){.auth-art{margin:12px 10px 0}}
+.notice-lesson{background:linear-gradient(135deg,rgba(82,211,146,.18),rgba(125,92,235,.12));border:1px solid rgba(60,193,126,.35);color:var(--ink);font-weight:600}
+.notice-lesson b{color:var(--mint-deep)}
+.hero .hero-card{grid-template-columns:1.12fr .88fr;gap:32px}
+.hero .hero-card h1{font-size:clamp(42px,5.2vw,74px)}
+@media (max-width:900px){.hero .hero-card{grid-template-columns:1fr}}
+@media (max-width:700px){.hero .hero-card .glow.a,.page-hero .hero-card .glow.a{width:300px;height:300px;right:-120px;top:-140px}
+  .hero .hero-card .glow.b,.page-hero .hero-card .glow.b{width:280px;height:280px;left:-140px;bottom:-140px}}
+.auth{max-width:1180px;margin:16px auto 0;padding-inline:var(--gutter);gap:clamp(24px,4vw,56px);min-height:calc(100vh - 110px);box-sizing:content-box}
+.auth-art{margin:0 0 8px;min-height:560px}
+.auth-form .auth-card{padding-inline:0}
+@media (max-width:900px){.auth{margin-top:10px;padding-inline:10px;min-height:0}.auth-art{margin:0;min-height:260px}.auth-form .auth-card{padding-inline:8px}}
+@media (max-width:900px){.auth-art .stage3d{left:auto;right:-2%;width:56%;max-width:none;min-height:0}.auth-art blockquote{max-width:52%;font-size:17px}}

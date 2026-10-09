@@ -55,6 +55,15 @@ const SEEN_KEY='viddora-returning';
 const isReturning=()=>{try{return localStorage.getItem(SEEN_KEY)==='1';}catch(e){return false;}};
 const markReturning=()=>{try{localStorage.setItem(SEEN_KEY,'1');}catch(e){}};
 window.Viddora.markReturning=markReturning;
+/* a lesson made while signed out waits here until the visitor signs in or up, then lands in their account */
+const sget=k=>{try{return sessionStorage.getItem(k);}catch(e){return null;}},sset=(k,v)=>{try{v==null?sessionStorage.removeItem(k):sessionStorage.setItem(k,v);}catch(e){}};
+const setPending=l=>sset('viddora-pending',JSON.stringify(l));
+const getPending=()=>{try{return JSON.parse(sget('viddora-pending')||'null');}catch(e){return null;}};
+function finishAuth(acc,isNew){
+  const l=getPending();let msg=isNew?`Welcome to viddora, ${acc.name.split(' ')[0]}! You have ${acc.credits} credits.`:`Welcome back, ${acc.name.split(' ')[0]}.`;
+  if(l&&acc.credits>=l.m){acc.lessons.unshift({id:'n'+Date.now(),t:l.t,d:l.d,m:l.m,date:'2026-10-09',s:'ready',k:l.k});acc.credits-=l.m;acc.spent+=l.m;msg=`“${l.t}” is ready to watch · ${l.m} credits used, ${acc.credits} left`;}
+  sset('viddora-pending',null);sset('viddora-welcome',msg);Store.set(acc);markReturning();location.href='account.html';
+}
 function paintNav(){
   const acc=Store.get();if(acc)markReturning();
   const back=isReturning();
@@ -134,7 +143,7 @@ if(form){
       const a=Store.get();
       if(a){a.lessons.unshift({id:'n'+Date.now(),t:v.charAt(0).toUpperCase()+v.slice(1),d:depth,m:len,date:'2026-10-09',s:'ready',k:guessKind(v)});a.credits-=len;a.spent+=len;Store.set(a);paintNav();
         $('#readyText').textContent=`Ready · ${len} credits used · ${a.credits} left`;$('#readyLink').textContent='Open in My account';$('#readyLink').href='account.html';}
-      else{$('#readyText').textContent=`“${v}” is ready · ${depth}`;const back=isReturning();$('#readyLink').textContent=back?'Sign in to watch':'Create a free account to watch';$('#readyLink').href=back?'signin.html':'signup.html';}
+      else{setPending({t:v.charAt(0).toUpperCase()+v.slice(1),d:depth,m:len,k:guessKind(v)});$('#readyText').textContent=`“${v}” is ready · ${depth}`;const back=isReturning();$('#readyLink').textContent=back?'Sign in to watch':'Create a free account to watch';$('#readyLink').href=back?'signin.html':'signup.html';}
       ready.classList.add('on');window.dispatchEvent(new Event('lessonready'));
     },t));
   });
@@ -205,9 +214,9 @@ if(si){
     fieldErr(pw.closest('.field'),pw.value.length>=8?'':'Your password has at least 8 characters.');if(pw.value.length<8)ok=false;
     if(!ok)return;
     const name=em.value.trim().split('@')[0].replace(/[._-]+/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
-    Store.set(exampleAccount(name,em.value.trim()));location.href='account.html';
+    finishAuth(exampleAccount(name,em.value.trim()),false);
   });
-  const demo=$('#demoBtn');demo&&demo.addEventListener('click',()=>{Store.set(exampleAccount());location.href='account.html';});
+  const demo=$('#demoBtn');demo&&demo.addEventListener('click',()=>finishAuth(exampleAccount(),false));
 }
 const su=$('#signupForm');
 if(su){
@@ -224,8 +233,14 @@ if(su){
     chk(tc,tc.checked,'Agree to the terms to create your account.');
     if(!ok)return;
     const plan=($('input[name=plan]:checked')||{}).value||'free';
-    Store.set(newAccount(nm.value.trim(),em.value.trim(),plan));location.href='account.html';
+    finishAuth(newAccount(nm.value.trim(),em.value.trim(),plan),true);
   });
 }
 $$('[data-signout]').forEach(b=>b.addEventListener('click',()=>{Store.clear();location.href='index.html';}));
+
+const pend=getPending(),authCard=$('.auth-card');
+if(pend&&authCard&&($('#signinForm')||$('#signupForm'))){const n=document.createElement('p');n.className='notice notice-lesson';n.setAttribute('role','status');
+  n.innerHTML='<b>Your lesson is ready.</b> '+($('#signupForm')?'Create your account':'Sign in')+' to watch “'+pend.t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))+'”.';
+  authCard.insertBefore(n,authCard.children[1]);}
+const wel=sget('viddora-welcome');if(wel&&$('#acct')){sset('viddora-welcome',null);setTimeout(()=>toast(wel),450);}
 })();
