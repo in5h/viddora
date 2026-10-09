@@ -98,11 +98,23 @@ if(header&&cta){
   paintNav();
 }
 
-/* ---------- gentle reveal on scroll ---------- */
-if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
-  const els=$$('main .head, .scenes, .depth, .ex, .who > div, .teaser, .post, .cta, .pipe, .lost, .plan, .addon, .calc .tablewrap, .faq details');
-  const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}}),{rootMargin:'0px 0px -8% 0px'});
-  els.forEach((el,i)=>{const r=el.getBoundingClientRect();if(r.top<innerHeight)return;el.classList.add('reveal');el.style.transitionDelay=((i%4)*60)+'ms';io.observe(el);});
+/* ---------- gentle reveal on scroll ----------
+   Checked on every scroll (not only on intersection) so a jump link or fast fling can never leave a section invisible. */
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const pending=$$('main .head, .scenes, .showcase, .depth, .ex, .who > div, .feature, .facts > div, .post, .cta, .pipe, .lost, .plan, .addon, .calc .tablewrap, .faq details')
+    .filter(el=>el.getBoundingClientRect().top>innerHeight);
+  pending.forEach((el,i)=>{el.classList.add('reveal');el.style.transitionDelay=((i%4)*70)+'ms';});
+  let left=pending.slice(),ticking=false;
+  const check=()=>{ticking=false;const lim=innerHeight*.92;left=left.filter(el=>{if(el.getBoundingClientRect().top<lim){el.classList.add('in');return false;}return true;});
+    if(!left.length){removeEventListener('scroll',onScroll);removeEventListener('resize',onScroll);}};
+  const onScroll=()=>{if(!ticking){ticking=true;requestAnimationFrame(check);}};
+  addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);addEventListener('load',check);check();
+}
+
+/* ---------- soft spotlight that follows the pointer across cards ---------- */
+if(matchMedia('(hover:hover) and (pointer:fine)').matches){
+  document.addEventListener('pointermove',e=>{const c=e.target.closest&&e.target.closest('.depth,.plan,.addon,.ex,.who-cards > div,.feature,.stat,.card,.lcard,.facts > div,.showcase,.hero-card,.cta');
+    if(!c)return;const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px');},{passive:true});
 }
 
 /* ---------- thumbnails ---------- */
@@ -130,6 +142,8 @@ if(form){
   lseg&&lseg.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;len=+b.dataset.v;$$('button',lseg).forEach(x=>x.setAttribute('aria-pressed',String(x===b)));});
   const q=$('#q'),build=$('#build'),err=$('#err'),ready=$('#ready');
   $$('.chip').forEach(c=>c.addEventListener('click',()=>{q.value=c.textContent;q.focus();}));
+  // example questions in the moving strip: put the question in the box and take you to it
+  $$('.mq').forEach(c=>c.addEventListener('click',()=>{q.value=c.textContent;$('#top').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});setTimeout(()=>q.focus({preventScroll:true}),350);}));
   addEventListener('keydown',e=>{if(e.key==='/'&&!e.metaKey&&!e.ctrlKey&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();q.focus();q.select();}});
   const go=$('button[type=submit]',form);
   let timers=[];
