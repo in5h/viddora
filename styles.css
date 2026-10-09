@@ -1,6 +1,7 @@
 
 /* Layout: a question becomes a lesson — split hero (ask box + live 3D mark), then the lesson story told in order: scenes, depth, ask-back, pipeline, examples. */
 :root{
+  color-scheme:light;
   --bg:#F6F4FD; --surface:#FFFFFF; --ink:#24124F; --sub:#5B4E86; --muted:#8478AE;
   --violet:#6A45E0; --violet-ink:#FFFFFF; --mint:#3CC17E; --mint-deep:#1F8A57; --lav:#ECE8FB; --line:#E4DEF7;
   --deep:#24124F; --deep-2:#4B2BB8; --deep-ink:#F3F0FF; --deep-sub:#C3B8EE;
@@ -9,20 +10,10 @@
   --body:'Nunito','Quicksand',ui-rounded,'Segoe UI',system-ui,sans-serif;
   --r-card:22px; --r-pill:999px; --gutter:clamp(16px,4vw,40px);
 }
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#1C0E42; --surface:#24124F; --ink:#FFFFFF; --sub:#D3C9F5; --muted:#A99BDB;
-  --violet:#9478F7; --violet-ink:#FFFFFF; --mint:#3CC17E; --mint-deep:#52D392; --lav:#33207A; --line:#3B2785;
-  --deep:#150A35; --deep-2:#4B2BB8; --deep-ink:#FFFFFF; --deep-sub:#D3C9F5;
-  --glow-a:#4B2BB8; --glow-b:#1D6B4E; --shadow:rgba(8,3,26,.45); --bad-bg:#4A1622; --bad-ink:#FFB3BC; color-scheme:dark }}
-:root[data-theme="dark"]{
-  --bg:#1C0E42; --surface:#24124F; --ink:#FFFFFF; --sub:#D3C9F5; --muted:#A99BDB;
-  --violet:#9478F7; --violet-ink:#FFFFFF; --mint:#3CC17E; --mint-deep:#52D392; --lav:#33207A; --line:#3B2785;
-  --deep:#150A35; --deep-2:#4B2BB8; --deep-ink:#FFFFFF; --deep-sub:#D3C9F5;
-  --glow-a:#4B2BB8; --glow-b:#1D6B4E; --shadow:rgba(8,3,26,.45); --bad-bg:#4A1622; --bad-ink:#FFB3BC; color-scheme:dark }
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
-body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit}
 button,input{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--violet);outline-offset:3px;border-radius:8px}
@@ -48,7 +39,7 @@ p{margin:0}
 .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
 .btn-ghost:hover{border-color:var(--violet)}
 .btn-mint{background:var(--mint);color:#24124F}
-@media (max-width:860px){.links{display:none}.nav .signin{display:none}}
+@media (max-width:860px){.links{display:none}}
 
 /* hero */
 .hero{position:relative;overflow:hidden}
@@ -398,7 +389,6 @@ table.hist td.num,table.hist th.num{text-align:right}
 /* ---------- polish: motion, theme toggle, mobile menu ---------- */
 :root{--ease:cubic-bezier(.2,.8,.2,1);--grad:linear-gradient(100deg,var(--violet) 10%,#9B5CF0 45%,var(--mint-deep) 95%)}
 ::selection{background:color-mix(in srgb,var(--violet) 28%,transparent)}
-html.theming *,html.theming *::before,html.theming *::after{transition:background-color .3s,border-color .3s,color .3s!important}
 body.locked{overflow:hidden}
 .skip{position:fixed;left:12px;top:-60px;z-index:100;background:var(--violet);color:var(--violet-ink);padding:10px 16px;border-radius:12px;font-weight:800;text-decoration:none;transition:top .2s}
 .skip:focus{top:12px}
@@ -418,7 +408,6 @@ body.locked{overflow:hidden}
 
 .icon-btn{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;flex:none;transition:transform .2s var(--ease),border-color .2s,background-color .2s}
 .icon-btn:hover{border-color:var(--violet);color:var(--violet)}
-.icon-btn[data-theme-toggle]:hover svg{transform:rotate(18deg)}
 .icon-btn svg{transition:transform .3s var(--ease)}
 .menu-btn{display:none}
 .menu-btn path{transition:transform .25s var(--ease),opacity .2s;transform-origin:12px 12px}
@@ -439,7 +428,7 @@ body.locked{overflow:hidden}
 .mnav-cta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
 .mnav .wrap > .btn{margin-top:16px}
 @keyframes drop{from{opacity:0;transform:translateY(-8px)}}
-@media (max-width:860px){.menu-btn{display:inline-grid}.nav-cta .btn-primary{display:none}.me .cr{display:none}}
+@media (max-width:860px){.menu-btn{display:inline-grid}.me .cr{display:none}.nav-cta .btn{min-height:42px;padding:0 16px;font-size:15px}}
 @media (max-width:380px){.brand{font-size:22px}.brand img{width:32px}.nav-cta{gap:6px}.icon-btn{width:40px;height:40px}}
 
 /* hero */
@@ -548,10 +537,6 @@ footer nav a:hover{color:var(--violet)}
 /* logo: full colour on light, the "on midnight" version in dark mode; never resized out of proportion */
 .brand{gap:0;font-size:0;line-height:0}
 .brand img{width:auto;height:36px;display:block}
-.brand .logo-dark{display:none}
-:root[data-theme="dark"] .brand .logo-light{display:none}
-:root[data-theme="dark"] .brand .logo-dark{display:block}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .brand .logo-light{display:none}:root:not([data-theme="light"]) .brand .logo-dark{display:block}}
 @media (max-width:380px){.brand img{height:30px}}
 
 /* type: Quicksand Bold headlines at 1.0, spaced-capital labels in Quicksand SemiBold */
@@ -589,9 +574,14 @@ h1,h2{line-height:1}
 
 /* gradient headline: violet gradient on light, mint gradient on midnight */
 .grad{background-image:linear-gradient(100deg,#7D5CEB,#4B2BB8)}
-:root[data-theme="dark"] .grad{background-image:var(--mint-grad)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .grad{background-image:var(--mint-grad)}}
 .grad{-webkit-background-clip:text;background-clip:text;color:transparent}
 /* until the 3D logo is running (or if it can't load), show the brand mark */
 .stage3d:not(.live)::before{content:"";position:absolute;inset:14%;background:url("assets/viddora-mark.png") center/contain no-repeat}
 .stage3d:not(.live) .hint{display:none}
+
+/* light theme only: soft lavender + mint glows as in the screens PDF, fading out instead of a hard edge */
+.hero,.page-hero{overflow:visible;overflow-x:clip}
+.hero ~ *,.page-hero ~ *{position:relative}
+.hero .glow,.page-hero .glow{opacity:.95}
+body{background:radial-gradient(1200px 700px at 100% 0%,rgba(220,211,250,.35),transparent 60%),radial-gradient(900px 600px at 0% 100%,rgba(205,239,221,.28),transparent 60%),var(--bg);background-attachment:fixed}
+.mnav .wrap > .btn{margin-top:16px}
